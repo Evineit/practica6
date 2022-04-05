@@ -1,9 +1,15 @@
-FROM nginx
-ENV DOCUMENTROOT=/usr/servidor/html
-ENV SERVER_NAME=servidor_prueba
+FROM debian
+
+ENV DOCUMENTROOT=/usr/prueba
+ENV SERVER_NAME=_
+
+
 COPY /build $DOCUMENTROOT
 COPY init.sh /init.sh
 
+RUN apt-get update && apt-get install -y nginx && apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN chmod 700 /init.sh
+
+EXPOSE 80
 
 CMD ["/init.sh"]
